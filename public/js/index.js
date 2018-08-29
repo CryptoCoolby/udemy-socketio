@@ -23,9 +23,10 @@ socket.on('newMessage', function (message) {
 $('#message-form').on('submit', function (e) {
     e.preventDefault()
 
-    let text = $('[name=message]').val()
     let from = $('[name=username]').val()
+    let text = $('[name=message]').val()
     socket.emit('createMessage', {from, text}, function (data) {
         console.log(data)
+        $('[name=message]').val('')
     })
 })
