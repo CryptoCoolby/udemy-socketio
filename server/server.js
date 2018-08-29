@@ -3,7 +3,7 @@ const http = require('http')
 const express = require('express')
 const socketIO = require('socket.io')
 const _ = require('lodash')
-const {generateMessage} = require('./utils/message.js')
+const {generateMessage, generateLocationMessage} = require('./utils/message.js')
 
 const port = process.env.PORT || 3000
 const app = express()
@@ -29,6 +29,12 @@ io.on('connection', (socket) => {
         // socket.broadcast.emit('newMessage', message)
         let data = 'Everything went fine'
         callback(data)
+    })
+
+
+    socket.on('createLocationMessage', (coords) => {
+        io.emit('newLocationMessage', generateLocationMessage(coords))
+
     })
 
 

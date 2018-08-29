@@ -5,23 +5,65 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>CoolbyChatApp</title>
         <style media="screen">
-            input {
+            * {
+                box-sizing: border-box;
+            }
+            body {
+                max-width: 700px;
+                margin: auto;
+                font-size: 22px;
+            }
+            div.buttons {
+                display: flex;
+                justify-content: space-between;
+                align-content: space-between;
+            }
+            input:not(.send) {
+                margin-bottom: 15px;
+                font-size: 24px;
+                padding: 5px 10px;
                 width: 100%;
                 display: block;
             }
+            form {
+                padding: 0 3vw;
+            }
+            input.send, button {
+                font-size: 22px;
+                padding: 10px 15px;
+                border-radius: 3px;
+                margin-bottom: 15px;
+                display: inline-block;
+                border: 1px solid lightgreen;
+                background: lightgreen;
+                color: white;
+            }
+            h1 {
+                text-align: center;
+            }
+
         </style>
     </head>
     <body>
-        <h1 >Coolest Chat App By [ () () |_ ß y</h1>
+        <h1 >Coolest Chat App</h1>
 
 
         <form id="message-form">
-            <input type="text" name="username" required autofocus placeholder="What is your imaginary name?">
-            <input type="text" name="message" required placeholder="What is it that you say?">
-            <input type="submit" name="" value="Send">
+            <input type="text" name="username" required autofocus placeholder="Pick a Nick!">
+            <input type="text" name="message" autocomplete="off" required placeholder="What is it that you say?">
+            <div class="buttons">
+                <button type="button" name="location">Send Location</button>
+                <input class="send" type="submit" name="" value="Send">
+            </div>
         </form>
+        <h4>Messages:</h4>
+        <hr>
 
         <ul id="messages"></ul>
+
+        <hr>
+        <h1>By [ () () |_ ß y</h1>
+
 
         <script type="text/javascript" src="/socket.io/socket.io.js"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
