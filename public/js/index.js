@@ -1,18 +1,30 @@
 let socket = io()
 
 socket.on('connect', function () {
-    console.log('Connectedo succesfulee')
+
 
     // socket.emit('createMessage', {
-    //     from: 'clientCool',
-    //     text: 'Howdie?'
+    //     from: 'Frank',
+    //     text: 'hi'
+    // }, function (data) {
+    //     console.log(data)
     // })
 })
 
 socket.on('disconnect', function () {
-    console.log('Disconnectedo unluckilee')
 })
 
 socket.on('newMessage', function (message) {
     console.log('Incoming message:', message)
+    let li = $('<li></li>').text(message.from + " says: " + message.text)
+    $('#messages').append(li)
+})
+
+$('#message-form').on('submit', function (e) {
+    e.preventDefault()
+
+    let text = $('[name=message]').val()
+    socket.emit('createMessage', {from: 'User', text}, function (data) {
+        console.log(data)
+    })
 })
