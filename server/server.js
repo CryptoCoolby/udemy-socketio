@@ -2,6 +2,7 @@ const path = require('path')
 const http = require('http')
 const express = require('express')
 const socketIO = require('socket.io')
+const _ = require('lodash')
 
 const port = process.env.PORT || 3000
 const app = express()
@@ -20,8 +21,9 @@ io.on('connection', (socket) => {
     })
 
     socket.on('createMessage', (message) => {
+        message = _.pick(message, ['from', 'text'])
         message.createdAt = new Date()
-        console.log('Creating message:', message)
+        io.emit('newMessage', message)
     })
 
     socket.on('disconnect', () => {
