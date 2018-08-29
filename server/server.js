@@ -12,22 +12,31 @@ let io = socketIO(server)
 app.use(express.static(path.join(__dirname, '..', 'public')))
 
 io.on('connection', (socket) => {
-    console.log('New user connectedo')
+    // console.log('New user connectedo')
 
     socket.emit('newMessage', {
         from: 'Cool',
-        text: 'Heyho might',
-        createdAt: 'just now'
+        text: 'Welcome to the chat, my friend',
+        createdAt: new Date().getTime()
+    })
+
+    socket.broadcast.emit('newMessage', {
+        from: 'Cool',
+        text: 'New user joined',
+        createdAt: new Date().getTime()
     })
 
     socket.on('createMessage', (message) => {
         message = _.pick(message, ['from', 'text'])
-        message.createdAt = new Date()
+        message.createdAt = new Date().getTime()
+
         io.emit('newMessage', message)
+        // socket.broadcast.emit('newMessage', message)
+
     })
 
     socket.on('disconnect', () => {
-        console.log('Cliento disconnectedo')
+        // console.log('Cliento disconnectedo')
     })
 })
 
