@@ -15,12 +15,12 @@
 
 
         <form id="message-form">
-            <input type="text" name="username" placeholder="What is your imaginary name?">
-            <input type="text" name="message" placeholder="What is it that you say?">
+            <input type="text" name="username" required autofocus placeholder="What is your imaginary name?">
+            <input type="text" name="message" required placeholder="What is it that you say?">
             <input type="submit" name="" value="Send">
         </form>
 
-        <ol id="messages"></ol>
+        <ul id="messages"></ul>
 
         <script type="text/javascript" src="/socket.io/socket.io.js"></script>
         <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
