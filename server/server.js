@@ -16,9 +16,11 @@ app.use(express.static(path.join(__dirname, '..', 'public')))
 io.on('connection', (socket) => {
     // console.log('New user connectedo')
 
-
-    socket.emit('newMessage',
-    generateMessage('Cool', 'Welcome to the chat, my friend'))
+    socket.on('greet', () => {
+        socket.emit('newMessage',
+        generateMessage('Cool', 'Welcome to the chat, my friend'))
+    })
+    
 
     socket.broadcast.emit('newMessage',
     generateMessage('Cool', 'New user joined!'))

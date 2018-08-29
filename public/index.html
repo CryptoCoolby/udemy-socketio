@@ -4,64 +4,24 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>CoolbyChatApp</title>
-        <style media="screen">
-            * {
-                box-sizing: border-box;
-            }
-            body {
-                max-width: 700px;
-                margin: auto;
-                font-size: 22px;
-            }
-            div.buttons {
-                display: flex;
-                justify-content: space-between;
-                align-content: space-between;
-            }
-            input:not(.send) {
-                margin-bottom: 15px;
-                font-size: 24px;
-                padding: 5px 10px;
-                width: 100%;
-                display: block;
-            }
-            form {
-                padding: 0 3vw;
-            }
-            input.send, button {
-                font-size: 22px;
-                padding: 10px 15px;
-                border-radius: 3px;
-                margin-bottom: 15px;
-                display: inline-block;
-                border: 1px solid lightgreen;
-                background: lightgreen;
-                color: white;
-            }
-            h1 {
-                text-align: center;
-            }
-
-        </style>
+        <link rel="stylesheet" href="/css/master.css">
     </head>
     <body>
         <h1 >Coolest Chat App</h1>
 
 
-        <form id="message-form">
-            <input type="text" name="username" required autofocus placeholder="Pick a Nick!">
-            <input type="text" name="message" autocomplete="off" required placeholder="What is it that you say?">
-            <div class="buttons">
-                <button type="button" name="location">Send Location</button>
-                <button type="submit" form="message-form" value="Submit">Send</button>
+        <form id="message__form">
+            <div id="message__box">
+                <ul id="messages"><li>Please enter a name</li></ul>
+            </div>
+            <div id="input__buttons">
+                <button type="submit" name="set__name">Set Username</button>
+            </div>
+            <div id="input__field">
+                <input type="text" class="hidden" name="message" autocomplete="off" required placeholder="What is it that you say?">
+                <input type="text" name="username" autofocus placeholder="Pick a Nick!">
             </div>
         </form>
-        <h4>Messages:</h4>
-        <hr>
-
-        <ul id="messages"></ul>
-
-        <hr>
         <h1>By [ () () |_ ß y</h1>
 
 
