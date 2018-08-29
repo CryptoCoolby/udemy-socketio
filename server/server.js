@@ -39,6 +39,8 @@ io.on('connection', (socket) => {
 
 
     socket.on('disconnect', () => {
+        socket.broadcast.emit('newMessage',
+        generateMessage('Cool', 'Somebody disconnected!'))
         // console.log('Cliento disconnectedo')
     })
 })
