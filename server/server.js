@@ -3,6 +3,7 @@ const http = require('http')
 const express = require('express')
 const socketIO = require('socket.io')
 const _ = require('lodash')
+const {generateMessage} = require('./utils/message.js')
 
 const port = process.env.PORT || 3000
 const app = express()
@@ -14,23 +15,14 @@ app.use(express.static(path.join(__dirname, '..', 'public')))
 io.on('connection', (socket) => {
     // console.log('New user connectedo')
 
-    socket.emit('newMessage', {
-        from: 'Cool',
-        text: 'Welcome to the chat, my friend',
-        createdAt: new Date().getTime()
-    })
+    socket.emit('newMessage',
+    generateMessage('Cool', 'Welcome to the chat, my friend'))
 
-    socket.broadcast.emit('newMessage', {
-        from: 'Cool',
-        text: 'New user joined',
-        createdAt: new Date().getTime()
-    })
+    socket.broadcast.emit('newMessage',
+    generateMessage('Cool', 'New user joined!'))
 
     socket.on('createMessage', (message) => {
-        message = _.pick(message, ['from', 'text'])
-        message.createdAt = new Date().getTime()
-
-        io.emit('newMessage', message)
+        io.emit('newMessage', generateMessage(message.from, message.text))
         // socket.broadcast.emit('newMessage', message)
 
     })
