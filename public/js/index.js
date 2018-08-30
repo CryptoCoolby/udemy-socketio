@@ -56,8 +56,9 @@ function startChat () {
 
     socket.on('newMessage', function (message) {
         console.log('Incoming message:', message)
-        let li = $('<li></li>').text(message.from + " says: " + message.text)
-        let element = $('#messages').append(li)
+        let formattedTime = moment(message.completedAt).format('h:mm'),
+            li = $('<li></li>').text("(" + formattedTime + ") " + message.from + ": " + message.text),
+            element = $('#messages').append(li)
         console.log(element)
         console.log(element.prop('scrollHeight'))
         element.scrollTop(element.prop('scrollHeight'))
@@ -93,11 +94,12 @@ function startChat () {
 
     socket.on('newLocationMessage', function (message) {
         let li = $('<li></li>'),
-            a = $(`<a></a>`)
+            a = $(`<a></a>`),
+            formattedTime = moment(message.completedAt).format('h:mm')
 
         a.attr('href', message.url)
         a.attr('target', '_blank')
-        a.text(`${message.from} is currently here.`)
+        a.text("(" + formattedTime + ") " + message.from + " is currently here.")
 
         li.append(a)
         $('#messages').append(li)
