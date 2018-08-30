@@ -1,15 +1,16 @@
 let socket = io()
 
-// socket.on('connect', function () {
-//
-//
-//     // socket.emit('createMessage', {
-//     //     from: 'Frank',
-//     //     text: 'hi'
-//     // }, function (data) {
-//     //     console.log(data)
-//     // })
-// })
+socket.on('connect', function () {
+    let template = $('#message-template').html(),
+        html = Mustache.render(template, {
+            from: "Cool",
+            text: "Please enter a username",
+            time: moment().format('h:mm a')
+        })
+
+    $('#message__box').prepend(html)
+
+})
 //
 // socket.on('disconnect', function () {
 // })
@@ -30,15 +31,12 @@ userNameButton.on('click', function () {
         $(userNameTextInput).hide()
 
         startChat()
-    } else {
-        alert('Pick a Nickname!')
     }
-
 })
 
 function startChat () {
 
-    socket.emit('greet')
+    socket.emit('greet', userNameTextInput.val())
     //----------------------------------
     //    SEND MESSAGE
     //----------------------------------
@@ -55,13 +53,14 @@ function startChat () {
     })
 
     socket.on('newMessage', function (message) {
-        console.log('Incoming message:', message)
-        let formattedTime = moment(message.completedAt).format('h:mm'),
-            li = $('<li></li>').text("(" + formattedTime + ") " + message.from + ": " + message.text),
-            element = $('#messages').append(li)
-        console.log(element)
-        console.log(element.prop('scrollHeight'))
-        element.scrollTop(element.prop('scrollHeight'))
+        let template = $('#message-template').html(),
+            html = Mustache.render(template, {
+                from: message.from,
+                text: message.text,
+                time: moment(message.createdAt).format('h:mm a')
+            })
+
+        $('#message__box').prepend(html)
     })
 
 
@@ -93,15 +92,13 @@ function startChat () {
     })
 
     socket.on('newLocationMessage', function (message) {
-        let li = $('<li></li>'),
-            a = $(`<a></a>`),
-            formattedTime = moment(message.completedAt).format('h:mm')
+        let template = $('#location-template').html(),
+            html = Mustache.render(template, {
+                from: message.from,
+                url: message.url,
+                time: moment(message.createdAt).format('h:mm a')
+            })
 
-        a.attr('href', message.url)
-        a.attr('target', '_blank')
-        a.text("(" + formattedTime + ") " + message.from + " is currently here.")
-
-        li.append(a)
-        $('#messages').append(li)
+        $('#message__box').prepend(html)
     })
 }

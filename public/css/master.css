@@ -12,13 +12,14 @@ body {
     padding: 0 1rem;
 }
 #message__box {
+    width: 100%;
     background: #00cc00;
-    margin-bottom: 1rem;
+    padding: .5rem 0;
     border-radius: 5px;
-    padding-right: 2rem;
     overflow-x: hidden;
     overflow-y: auto;
     height: 50vh;
+    margin-bottom: .5rem;
 }
 #message__box::-webkit-scrollbar {
     width: 10px;
@@ -53,7 +54,7 @@ body {
     font-size: 22px;
     padding: 10px 15px;
     border-radius: 3px;
-    margin-bottom: 15px;
+    margin-bottom: .5rem;
     display: inline-block;
         border: 1px solid #00cc00;
     background: #00cc00;
@@ -72,12 +73,42 @@ h1 {
     padding: 15px;
     margin:auto;
 }
-li {
+ul {
+    margin: 0;
+    padding: 0;
+}
+li.message__item {
     list-style: none;
+    margin: .5rem 2rem;
+    overflow: hidden;
+    background-color: #00cc00;
+    color: white;
+}
+li.message__item div {
     padding: 5px 15px;
+}
+li.message__item div:first-child {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+}
+li.message__item div:last-child {
     background-color: white;
+    color: black;
     border-radius: 15px;
-    margin-top: 1rem;
+}
+li.message__item div:first-child span:last-child {
+    font-weight: lighter;
+    font-size: 16px;
+}
+.location__msg{
+    background-color: #666!important;
+    text-align: center;
+    color: #80e680!important;
+}
+.location__msg a {
+    text-decoration: none;
+    color: #80e680!important;
 }
 .hidden {
     display: none!important;

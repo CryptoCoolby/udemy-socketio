@@ -15,15 +15,20 @@ app.use(express.static(path.join(__dirname, '..', 'public')))
 
 io.on('connection', (socket) => {
     // console.log('New user connectedo')
+    socket.emit('newMessage',
+    generateMessage('Cool', 'Please enter a name, my friend'))
 
-    socket.on('greet', () => {
+    let userName
+
+    socket.on('greet', (name) => {
+        userName = name
         socket.emit('newMessage',
-        generateMessage('Cool', 'Welcome to the chat, my friend'))
+        generateMessage('Cool', `Welcome to the chat, ${name}`))
+        socket.broadcast.emit('newMessage',
+        generateMessage('Cool', `${name} joined the chat!`))
     })
-    
 
-    socket.broadcast.emit('newMessage',
-    generateMessage('Cool', 'New user joined!'))
+
 
 
     socket.on('createMessage', (message, callback) => {
@@ -42,7 +47,7 @@ io.on('connection', (socket) => {
 
     socket.on('disconnect', () => {
         socket.broadcast.emit('newMessage',
-        generateMessage('Cool', 'Somebody disconnected!'))
+        generateMessage('Cool', `${userName} disconnected!`))
         // console.log('Cliento disconnectedo')
     })
 })
