@@ -11,6 +11,10 @@ body {
     margin: auto;
     padding: 0 1rem;
 }
+#message__form.launched {
+    position: sticky;
+    top: 0px;
+}
 #message__box {
     width: 100%;
     background: #00cc00;
@@ -18,8 +22,10 @@ body {
     border-radius: 5px;
     overflow-x: hidden;
     overflow-y: auto;
-    height: 50vh;
     margin-bottom: .5rem;
+}
+#message__box.launched {
+    height: calc(100vh - 128px);
 }
 #message__box::-webkit-scrollbar {
     width: 10px;
@@ -72,10 +78,6 @@ h1 {
     font-size: 36px;
     padding: 15px;
     margin:auto;
-}
-ul {
-    margin: 0;
-    padding: 0;
 }
 li.message__item {
     list-style: none;

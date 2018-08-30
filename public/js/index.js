@@ -36,7 +36,13 @@ userNameButton.on('click', function () {
 
 function startChat () {
 
+    $('#message__form').addClass('launched')
+    $('#message__box').addClass('launched')
+    $('body').css('overflow', 'hidden')
+    $('h1').remove()
+
     socket.emit('greet', userNameTextInput.val())
+
     //----------------------------------
     //    SEND MESSAGE
     //----------------------------------
@@ -60,7 +66,9 @@ function startChat () {
                 time: moment(message.createdAt).format('h:mm a')
             })
 
-        $('#message__box').prepend(html)
+        $('#message__box').append(html)
+        scrollToBottom()
+
     })
 
 
@@ -99,6 +107,25 @@ function startChat () {
                 time: moment(message.createdAt).format('h:mm a')
             })
 
-        $('#message__box').prepend(html)
+        $('#message__box').append(html)
+        scrollToBottom()
     })
+}
+
+//----------------------------------
+//    SCROLL TO BOTTOM
+//----------------------------------
+
+function scrollToBottom () {
+    let messageBox = $('#message__box'),
+        newMessage = $('#message__box li:last-child'),
+        clientHeight = messageBox.prop('clientHeight'),
+        scrollTop = messageBox.prop('scrollTop'),
+        scrollHeight = messageBox.prop('scrollHeight'),
+        newMessageHeight = newMessage.innerHeight(),
+        lastMessageHeight = newMessage.prev().innerHeight()
+
+    if (clientHeight + scrollTop + newMessageHeight + lastMessageHeight >= scrollHeight) {
+        messageBox.scrollTop(scrollHeight)
+    }
 }
