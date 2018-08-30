@@ -1,14 +1,7 @@
 let socket = io()
 
 socket.on('connect', function () {
-    let template = $('#message-template').html(),
-        html = Mustache.render(template, {
-            from: "Cool",
-            text: "Please enter a username",
-            time: moment().format('h:mm a')
-        })
-
-    $('#message__box').prepend(html)
+    
 
 })
 //
@@ -22,7 +15,8 @@ socket.on('connect', function () {
 let userNameButton = $('[name=set__name]'),
     userNameTextInput = $('[name=username]')
 
-userNameButton.on('click', function () {
+userNameButton.on('click', function (e) {
+    e.preventDefault()
     if (userNameTextInput.val()) {
         $('#input__buttons').html('<button type="button" name="location">Send Location</button><button type="submit" name="send__message__button" value="Submit">Send</button>');
 
@@ -36,8 +30,9 @@ userNameButton.on('click', function () {
 
 function startChat () {
 
-    $('#message__form').addClass('launched')
-    $('#message__box').addClass('launched')
+    $('#enter__chat').hide()
+    $('#message__form').show()
+
     $('body').css('overflow', 'hidden')
     $('h1').remove()
 
@@ -49,8 +44,8 @@ function startChat () {
 
     $('[name="send__message__button"]').on('click', function (e) {
         let text = $('[name=message]').val()
-        if (!text) return
         e.preventDefault()
+        if (!text) return
 
         let from = $('[name=username]').val()
         socket.emit('createMessage', {from, text}, function (data) {

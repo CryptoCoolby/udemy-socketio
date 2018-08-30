@@ -5,13 +5,23 @@ body {
     font-size: 22px;
     word-break: break-word;
 }
-#message__form {
+#enter__chat {
     display: block;
     max-width: 800px;
     margin: auto;
+    border-radius: 15px;
     padding: 0 1rem;
+    border: 1px solid #00cc00;
 }
-#message__form.launched {
+#enter__chat * {
+    display: block!important;
+    margin: 2rem auto!important;
+}
+#message__form {
+    display: none;
+    max-width: 800px;
+    margin: auto;
+    padding: 0 1rem;
     position: sticky;
     top: 0px;
 }
@@ -23,8 +33,6 @@ body {
     overflow-x: hidden;
     overflow-y: auto;
     margin-bottom: .5rem;
-}
-#message__box.launched {
     height: calc(100vh - 128px);
 }
 #message__box::-webkit-scrollbar {
@@ -56,7 +64,7 @@ body {
     justify-content: space-between;
     align-content: space-between;
 }
-#input__buttons button {
+#input__buttons button, #enter__chat button {
     font-size: 22px;
     padding: 10px 15px;
     border-radius: 3px;
@@ -66,7 +74,7 @@ body {
     background: #00cc00;
     color: white;
 }
-#input__field input {
+#input__field input, #enter__chat input {
     margin-bottom: 15px;
     font-size: 24px;
     padding: 5px 10px;

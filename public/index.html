@@ -7,22 +7,25 @@
         <link rel="stylesheet" href="/css/master.css">
     </head>
     <body>
-        <h1>Coolest Chat App</h1>
+        <form id="enter__chat">
+            <h1>Coolest Chat App</h1>
 
+            <input type="text" name="username" autofocus placeholder="Pick a Nick!">
+            <button type="submit" name="set__name">Launch chat</button>
+
+            <h1>By [ () () |_ ß y</h1>
+        </form>
 
         <form id="message__form">
 
             <div id="message__box"></div>
 
             <div id="input__buttons">
-                <button type="submit" name="set__name">Launch chat</button>
             </div>
             <div id="input__field">
                 <input type="text" class="hidden" name="message" autocomplete="off" required placeholder="What is it that you say?">
-                <input type="text" name="username" autofocus placeholder="Pick a Nick!">
             </div>
         </form>
-        <h1>By [ () () |_ ß y</h1>
         <script id="message-template" type="text/template">
             <li class="message__item">
                 <div>

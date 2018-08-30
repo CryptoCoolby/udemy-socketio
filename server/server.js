@@ -15,8 +15,6 @@ app.use(express.static(path.join(__dirname, '..', 'public')))
 
 io.on('connection', (socket) => {
     // console.log('New user connectedo')
-    socket.emit('newMessage',
-    generateMessage('Cool', 'Please enter a name, my friend'))
 
     let userName
 
