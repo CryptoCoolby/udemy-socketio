@@ -90,6 +90,7 @@ function startChat () {
         if (!text) return
 
         socket.emit('createMessage', {from: userName, text}, function (data) {
+            
         })
     })
 
