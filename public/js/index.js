@@ -1,7 +1,7 @@
 let socket = io()
 
 socket.on('connect', function () {
-    
+
 
 })
 //
@@ -9,34 +9,54 @@ socket.on('connect', function () {
 // })
 
 //----------------------------------
-//    SET USERNAME
+//    LAUNCH CHAT
 //----------------------------------
 
 let userNameButton = $('[name=set__name]'),
-    userNameTextInput = $('[name=username]')
+    userNameTextInput = $('[name=username]'),
+    userName,
+    privateRoom
 
 userNameButton.on('click', function (e) {
     e.preventDefault()
-    if (userNameTextInput.val()) {
-        $('#input__buttons').html('<button type="button" name="location">Send Location</button><button type="submit" name="send__message__button" value="Submit">Send</button>');
-
-        $('#input__field .hidden').removeClass('hidden')
-        $('[name=message]').val('').focus()
-        $(userNameTextInput).hide()
-
+    userName = userNameTextInput.val().trim()
+    if (typeof userName === 'string' && userName.length > 0) {
+        privateRoom = $('[name=roomname]').val().trim()
         startChat()
+    } else {
+        userNameTextInput.focus()
+        userNameTextInput.addClass('redBorder')
     }
+})
+
+//----------------------------------
+//    GO FOR PRIVATE ROOM
+//----------------------------------
+
+$('[name=private]').on('click', function () {
+    $(this).hide(300)
+    $('[name=roomname]').show(300).focus()
 })
 
 function startChat () {
 
+    let params = {userName, privateRoom}
+    console.log(params)
+    socket.emit('join', params, function (err) {
+        if (err) {
+
+        } else {
+
+        }
+    })
+
     $('#enter__chat').hide()
     $('#message__form').show()
+    $('body').removeClass('center__content')
 
     $('body').css('overflow', 'hidden')
-    $('h1').remove()
 
-    socket.emit('greet', userNameTextInput.val())
+    $('[name=message]').focus()
 
     //----------------------------------
     //    SEND MESSAGE
@@ -47,8 +67,7 @@ function startChat () {
         e.preventDefault()
         if (!text) return
 
-        let from = $('[name=username]').val()
-        socket.emit('createMessage', {from, text}, function (data) {
+        socket.emit('createMessage', {from: userName, text}, function (data) {
             $('[name=message]').val('').focus()
         })
     })
@@ -76,13 +95,13 @@ function startChat () {
         $('[name=message]').focus()
         if (!navigator.geolocation) return alert('Geolocation not available')
 
-        locationButton.attr('disabled', 'disabled').text('Sending location...')
+        locationButton.attr('disabled', 'disabled').text('Processing...')
         navigator.geolocation.getCurrentPosition(function (position) {
             if (!$('[name=username]').val()) return alert('You don\'t have a username')
             let coords = {
                 longitude: position.coords.longitude,
                 latitude: position.coords.latitude,
-                from: $('[name=username]').val()
+                from: userName
             }
             socket.emit('createLocationMessage', coords)
             locationButton.removeAttr('disabled').text('Send location')
@@ -108,7 +127,7 @@ function startChat () {
 }
 
 //----------------------------------
-//    SCROLL TO BOTTOM
+//    SCROLL CHATBOX TO BOTTOM
 //----------------------------------
 
 function scrollToBottom () {

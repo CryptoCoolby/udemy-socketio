@@ -1,3 +1,6 @@
+:root {
+    --mainColor: #49a1dd;
+}
 * {
     box-sizing: border-box;
 }
@@ -5,17 +8,42 @@ body {
     font-size: 22px;
     word-break: break-word;
 }
+.center__content {
+    display: flex;
+    height: 100vh;
+    background-color: var(--mainColor);
+}
 #enter__chat {
-    display: block;
+    display: flex;
+    align-content: space-between;
+    justify-content: center;
+    flex-direction: column;
     max-width: 800px;
     margin: auto;
     border-radius: 15px;
     padding: 0 1rem;
-    border: 1px solid #00cc00;
+    border: 1px solid var(--mainColor);
+    background-color: #fff;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.2);
 }
-#enter__chat * {
-    display: block!important;
-    margin: 2rem auto!important;
+#enter__chat > * {
+    margin: 1rem auto;
+    display: block;
+}
+#enter__chat button {
+    width: 160px;
+}
+#enter__chat .inactive {
+    border: 1px solid var(--mainColor);
+    color: var(--mainColor);
+    background: white;
+}
+#enter__chat input:last-of-type {
+    display: none;
+}
+.redBorder {
+    border: 2px solid red;
+    outline: none;
 }
 #message__form {
     display: none;
@@ -27,13 +55,14 @@ body {
 }
 #message__box {
     width: 100%;
-    background: #00cc00;
+    background: var(--mainColor);
     padding: .5rem 0;
     border-radius: 5px;
     overflow-x: hidden;
     overflow-y: auto;
     margin-bottom: .5rem;
     height: calc(100vh - 128px);
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
 }
 #message__box::-webkit-scrollbar {
     width: 10px;
@@ -68,14 +97,15 @@ body {
     font-size: 22px;
     padding: 10px 15px;
     border-radius: 3px;
-    margin-bottom: .5rem;
     display: inline-block;
-        border: 1px solid #00cc00;
-    background: #00cc00;
+    border: 1px solid var(--mainColor);
+    background: var(--mainColor);
     color: white;
+    cursor: pointer;
+    box-shadow: 2px 2px 2px 1px rgba(0, 0, 0, 0.4);
 }
 #input__field input, #enter__chat input {
-    margin-bottom: 15px;
+    margin: 15px 0;
     font-size: 24px;
     padding: 5px 10px;
     width: 100%;
@@ -91,7 +121,7 @@ li.message__item {
     list-style: none;
     margin: .5rem 2rem;
     overflow: hidden;
-    background-color: #00cc00;
+    background-color: var(--mainColor);
     color: white;
 }
 li.message__item div {
@@ -112,13 +142,10 @@ li.message__item div:first-child span:last-child {
     font-size: 16px;
 }
 .location__msg{
-    background-color: #666!important;
     text-align: center;
-    color: #80e680!important;
 }
 .location__msg a {
-    text-decoration: none;
-    color: #80e680!important;
+    color: var(--mainColor)!important;
 }
 .hidden {
     display: none!important;

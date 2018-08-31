@@ -3,6 +3,7 @@ const http = require('http')
 const express = require('express')
 const socketIO = require('socket.io')
 const _ = require('lodash')
+
 const {generateMessage, generateLocationMessage} = require('./utils/message.js')
 
 const port = process.env.PORT || 3000
@@ -15,22 +16,30 @@ app.use(express.static(path.join(__dirname, '..', 'public')))
 
 io.on('connection', (socket) => {
     // console.log('New user connectedo')
+    let user, room
 
-    let userName
+    socket.on('join', ({userName, privateRoom}) => {
+        user = userName
+        room = privateRoom
 
-    socket.on('greet', (name) => {
-        userName = name
+        socket.join(privateRoom)
+        let welcomeText
+
+        if (room) {
+            welcomeText = `Welcome to the chat, ${user}! This is private room "${room}".`
+        } else {
+            welcomeText = 'Greetings, ' + user + '! Welcome to the coolest yadida chill public chat room!'
+        }
+
         socket.emit('newMessage',
-        generateMessage('Cool', `Welcome to the chat, ${name}`))
-        socket.broadcast.emit('newMessage',
-        generateMessage('Cool', `${name} joined the chat!`))
+        generateMessage('Cool', welcomeText))
+        socket.broadcast.to(room).emit('newMessage',
+        generateMessage('Cool', `${user} joined the chat!`))
     })
 
 
-
-
     socket.on('createMessage', (message, callback) => {
-        io.emit('newMessage', generateMessage(message.from, message.text))
+        io.to(room).emit('newMessage', generateMessage(message.from, message.text))
         // socket.broadcast.emit('newMessage', message)
         let data = 'Everything went fine'
         callback(data)
@@ -38,14 +47,14 @@ io.on('connection', (socket) => {
 
 
     socket.on('createLocationMessage', (coords) => {
-        io.emit('newLocationMessage', generateLocationMessage(coords))
+        io.to(room).emit('newLocationMessage', generateLocationMessage(coords))
 
     })
 
 
     socket.on('disconnect', () => {
-        socket.broadcast.emit('newMessage',
-        generateMessage('Cool', `${userName} disconnected!`))
+        socket.broadcast.to(room).emit('newMessage',
+        generateMessage('Cool', `${user} left the room!`))
         // console.log('Cliento disconnectedo')
     })
 })

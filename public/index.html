@@ -6,12 +6,14 @@
         <title>CoolbyChatApp</title>
         <link rel="stylesheet" href="/css/master.css">
     </head>
-    <body>
+    <body class="center__content">
         <form id="enter__chat">
             <h1>Coolest Chat App</h1>
 
             <input type="text" name="username" autofocus placeholder="Pick a Nick!">
             <button type="submit" name="set__name">Launch chat</button>
+            <button type="button" name="private" class="inactive">Go private</button>
+            <input type="text" name="roomname" placeholder="Enter private room..">
 
             <h1>By [ () () |_ ß y</h1>
         </form>
@@ -21,9 +23,11 @@
             <div id="message__box"></div>
 
             <div id="input__buttons">
+                <button type="button" name="location">Send Location</button>
+                <button type="submit" name="send__message__button" value="Submit">Send</button>
             </div>
             <div id="input__field">
-                <input type="text" class="hidden" name="message" autocomplete="off" required placeholder="What is it that you say?">
+                <input type="text" name="message" autocomplete="off" required placeholder="What is it that you say?">
             </div>
         </form>
         <script id="message-template" type="text/template">
@@ -44,7 +48,7 @@
                     <span> {{time}}</span>
                 </div>
                 <div class="location__msg">
-                    <span> >> <a href="{{url}}" target="_blank"><strong>{{from}}</strong> is currently here</a> << </span>
+                    <span><a href="{{url}}" target="_blank">  <strong>{{from}}</strong> sent a location. </a></span>
                 </div>
             </li>
         </script>
