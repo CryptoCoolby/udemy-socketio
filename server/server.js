@@ -5,11 +5,13 @@ const socketIO = require('socket.io')
 const _ = require('lodash')
 
 const {generateMessage, generateLocationMessage} = require('./utils/message.js')
+const {Users} = require('./utils/users.js')
 
 const port = process.env.PORT || 3000
 const app = express()
 let server = http.createServer(app)
 let io = socketIO(server)
+let users = new Users()
 
 app.use(express.static(path.join(__dirname, '..', 'public')))
 
@@ -23,8 +25,12 @@ io.on('connection', (socket) => {
         room = privateRoom
 
         socket.join(privateRoom)
-        let welcomeText
+        users.removeUser(socket.id)
+        users.addUser({id: socket.id, userName, privateRoom})
 
+        io.to(room).emit('updateUserList', users.getUserList(room))
+
+        let welcomeText
         if (room) {
             welcomeText = `Welcome to the chat, ${user}! This is private room "${room}".`
         } else {
@@ -55,6 +61,10 @@ io.on('connection', (socket) => {
     socket.on('disconnect', () => {
         socket.broadcast.to(room).emit('newMessage',
         generateMessage('Cool', `${user} left the room!`))
+        let userObj = users.removeUser(socket.id)
+        if (userObj) io.to(room).emit('updateUserList', users.getUserList(room))
+
+
         // console.log('Cliento disconnectedo')
     })
 })
