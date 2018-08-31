@@ -56,6 +56,7 @@ function startChat () {
     $('#enter__chat').hide()
     $('#message__form').show()
     $('#user__list').addClass('user__list__class')
+    $('#user__list').removeClass('hidden')
     $('body').removeClass('center__content')
 
     $('body').css('overflow', 'hidden')
